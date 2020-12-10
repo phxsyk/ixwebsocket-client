@@ -1,1 +1,1 @@
-# IXWebsocket Cleint  
+# IXWebsocket Client  

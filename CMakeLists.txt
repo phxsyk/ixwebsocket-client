@@ -13,7 +13,9 @@ endif (WIN32)
 if (UNIX)
   set ( VCPKG_DIR $ENV{HOME}/downloads/vcpkg)
 endif (UNIX)
+aditional
 
+# directories and additional libraries
 if (WIN32)
     include_directories(${VCPKG_DIR}/installed/x86-windows/include)
 
@@ -28,5 +30,8 @@ if (UNIX)
     link_directories(${VCPKG_DIR}/installed/x64-linux/lib)
 endif (UNIX)
 
+# compile
 add_executable(ixwebsocket-client main.cpp)
+
+# link
 target_link_libraries(ixwebsocket-client ${PROJECT_LINK_LIBS})
