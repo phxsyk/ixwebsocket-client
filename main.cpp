@@ -1,8 +1,15 @@
 #include <iostream>
+#ifdef _WIN32
+  #include <ixwebsocket/IXNetSystem.h>
+#endif
 #include <ixwebsocket/IXWebSocket.h>
 
 int main()
 {
+  
+#ifdef _WIN32
+  ix::initNetSystem();
+#endif
 
   // Our websocket object
   ix::WebSocket webSocket;
@@ -28,22 +35,22 @@ int main()
   });
 
   // Now that our callback is setup, we can start our background thread and receive messages
-   webSocket.connect(3);
-  webSocket.send("hello world");
-  webSocket.sendBinary("some serialized binary data");
-     webSocket.run();
+  //  webSocket.connect(10);
+  // webSocket.send("hello world");
+  // webSocket.sendBinary("some serialized binary data");
+  //    webSocket.run();
   // webSocket.start();
   // getchar();
   
-  // Send a message to the server (default to TEXT mode)
-  webSocket.send("hello world");
+  // // Send a message to the server (default to TEXT mode)
+  // webSocket.send("hello world");
 
-  // The message can be sent in BINARY mode (useful if you send MsgPack data for example)
-  webSocket.sendBinary("some serialized binary data");
+  // // The message can be sent in BINARY mode (useful if you send MsgPack data for example)
+  // webSocket.sendBinary("some serialized binary data");
 
-  // ... finally ...
+  // // ... finally ...
 
-  getchar();
+  // getchar();
   // Stop the connection
   webSocket.stop();
 
