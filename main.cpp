@@ -7,7 +7,7 @@ int main()
   // Our websocket object
   ix::WebSocket webSocket;
 
-  std::string url("ws://127.0.0.1:8080/");
+  std::string url("ws://127.0.0.1:3002/");
   webSocket.setUrl(url);
 
   webSocket.enableAutomaticReconnection(); // turn on

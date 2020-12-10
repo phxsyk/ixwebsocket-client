@@ -13,9 +13,8 @@ endif (WIN32)
 if (UNIX)
   set ( VCPKG_DIR $ENV{HOME}/downloads/vcpkg)
 endif (UNIX)
-aditional
 
-# directories and additional libraries
+# additional directories and additional libraries
 if (WIN32)
     include_directories(${VCPKG_DIR}/installed/x86-windows/include)
 
