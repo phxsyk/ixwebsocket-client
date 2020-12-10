@@ -10,7 +10,7 @@ if (WIN32)
 
     include_directories($ENV{USERPROFILE}/Desktop/Programlar/vcpkg/installed/x86-windows/include)
 
-    set ( PROJECT_LINK_LIBS ixwebsocket.lib mbedcrypto.lib mbedtls.lib zlibd.lib )
+    set ( PROJECT_LINK_LIBS ixwebsocket.lib mbedcrypto.lib mbedtls.lib zlibd.lib crypt32.lib )
     link_directories($ENV{USERPROFILE}/Desktop/Programlar/vcpkg/installed/x86-windows/debug/lib)
 endif (WIN32)
 
