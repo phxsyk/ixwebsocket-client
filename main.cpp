@@ -1,10 +1,10 @@
 #include <iostream>
 #ifdef _WIN32
-#include <ixwebsocket/IXNetSystem.h>
+  #include <ixwebsocket/IXNetSystem.h>
 #endif
 #include <ixwebsocket/IXWebSocket.h>
 
-int main()
+int main(int argc, char *argv[])
 {
 
 #ifdef _WIN32
@@ -14,7 +14,13 @@ int main()
   // Our websocket object
   ix::WebSocket webSocket;
 
-  std::string url("ws://127.0.0.1:3002/");
+  if (argc < 2)
+  {
+    std::cout << "Usage: ixwebsocket-client <url>\n";
+    return 1;
+  }
+  std::cout << "-> Connecting to " << argv[1] << " ..." << std::endl;
+  std::string url(argv[1]);
   webSocket.setUrl(url);
 
   webSocket.enableAutomaticReconnection(); // turn on
@@ -27,32 +33,28 @@ int main()
   webSocket.disablePerMessageDeflate();
 
   // Setup a callback to be fired when a message or an event (open, close, error) is received
-  webSocket.setOnMessageCallback([](const ix::WebSocketMessagePtr &msg) {
+  webSocket.setOnMessageCallback([&webSocket](const ix::WebSocketMessagePtr &msg) {
     if (msg->type == ix::WebSocketMessageType::Message)
     {
-      std::cout << msg->str << std::endl;
+      std::cout << "# Received: \"" << msg->str << "\"" << std::endl;
+    }
+    else if (msg->type == ix::WebSocketMessageType::Open)
+    {
+      std::cout << "# Connected." << std::endl;
+    }
+    else if (msg->type == ix::WebSocketMessageType::Pong)
+    {
+      std::cout << "# Pong" << std::endl;
     }
   });
 
   // Now that our callback is setup, we can start our background thread and receive messages
   webSocket.connect(3);
-  webSocket.send("hello world");
-  webSocket.sendBinary("some serialized binary data");
+  std::string msg = "Hello!";
+  webSocket.send(msg);
+  std::cout << "# Sent: \"" << msg << "\"" << std::endl;
+  //webSocket.sendBinary("some serialized binary data");
   webSocket.run();
-  // webSocket.start();
-  // getchar();
 
-  // // Send a message to the server (default to TEXT mode)
-  // webSocket.send("hello world");
-
-  // // The message can be sent in BINARY mode (useful if you send MsgPack data for example)
-  // webSocket.sendBinary("some serialized binary data");
-
-  // // ... finally ...
-
-  // getchar();
-  // Stop the connection
   webSocket.stop();
-
-  // getchar();
 }
