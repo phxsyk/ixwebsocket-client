@@ -57,4 +57,8 @@ int main(int argc, char *argv[])
   webSocket.run();
 
   webSocket.stop();
+
+#ifdef _WIN32
+  ix::uninitNetSystem();
+#endif
 }
